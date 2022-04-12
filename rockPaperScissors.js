@@ -39,15 +39,34 @@ function playRound(playerSelection, computerSelection){
     return roundResults;
 }
 
+//function to provide player selection - not quite working yet. Think the issue is the program is steaming ahead when I want it to wait for user selection
+function selection(){
+    const rock = document.querySelector('#rock');
+    rock.addEventListener('click', () => {
+        console.log("rock");
+        return 'rock';
+    })
+    const paper = document.querySelector('#paper');
+    paper.addEventListener('click', ()=> {
+        console.log("paper");
+        return 'paper';
+    })
+    const scissors = document.querySelector('#scissors');
+    scissors.addEventListener('click', () => {
+        console.log("scissors")
+        return 'scissors';
+    })
+}
+
 function game(){
     //sets initial score count before loop
-    let playerPoints =0;
-    let computerPoints=0;
+    let playerPoints = 0;
+    let computerPoints = 0;
     console.log(`Here we go. Best of 5 Wins!`)
     //Plays 5 rounds
     for (let i=0; i<5; i++){
         //prompts user for input
-        let playerSelection = prompt();
+        let playerSelection = selection();
         //puts result of the round into roundResults array
         let roundResults = (playRound(playerSelection, computerPlay()));
         //console.log(roundResults);
@@ -56,8 +75,8 @@ function game(){
         playerPoints = playerPoints + roundResults [3];
         computerPoints = computerPoints + roundResults [4];
         //if the round result it a tie, subtracts an iterator so it doesn't count against the amount of rounds played
-        if(roundResults[2]==`Tied` || `played an invalid entry`) i--;
-        if(computerPoints ===3 || playerPoints ===3) {break}
+        if(roundResults[2] == `Tied` || `played an invalid entry`) i--;
+        if(computerPoints === 3 || playerPoints === 3) {break}
     }
     // announce a winner
     if (playerPoints > computerPoints){
@@ -68,3 +87,10 @@ function game(){
     } else if(playerPoints == computerPoints){
         console.log(`This round's a tie!`)}; 
 }
+
+//The Play button
+const play = document.querySelector('#play');
+//calls the game function when user presses play
+play.addEventListener('click', game);
+
+
