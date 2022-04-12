@@ -17,12 +17,15 @@ function playRound(playerSelection, computerSelection){
     if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
         //returns array, no points to either side
         let roundResults = [playerSelection, computerSelection, `played an invalid entry`, 0, 0];
+        //console.log(roundResults);
         return roundResults;
+        
     }   
     //ends function returns tie
     if (playerSelection == computerSelection){
         // Array is [playerSelection, computerSelection, result, playerPoints, computerPoints]
         let roundResults = [playerSelection, computerSelection, 'Tied', 0, 0];
+        //console.log(roundResults);
         return roundResults;
     }
     //lists the three losing plays
@@ -31,31 +34,14 @@ function playRound(playerSelection, computerSelection){
         (playerSelection == 'scissors' && computerSelection == 'rock')){
         // Array is [playerSelection, computerSelection, result, playerPoints, computerPoints]
         let roundResults = [playerSelection, computerSelection, `Lose`, 0, 1];
+        //console.log(roundResults);
         return roundResults;
     }
     //all remaining plays must be winners, declares player wins
     // Array is [playerSelection, computerSelection, result, playerPoints, computerPoints]
     let roundResults = [playerSelection, computerSelection, `Win`, 1, 0];
+    //console.log(roundResults);
     return roundResults;
-}
-
-//function to provide player selection - not quite working yet. Think the issue is the program is steaming ahead when I want it to wait for user selection
-function selection(){
-    const rock = document.querySelector('#rock');
-    rock.addEventListener('click', () => {
-        console.log("rock");
-        return 'rock';
-    })
-    const paper = document.querySelector('#paper');
-    paper.addEventListener('click', ()=> {
-        console.log("paper");
-        return 'paper';
-    })
-    const scissors = document.querySelector('#scissors');
-    scissors.addEventListener('click', () => {
-        console.log("scissors")
-        return 'scissors';
-    })
 }
 
 function game(){
@@ -88,9 +74,42 @@ function game(){
         console.log(`This round's a tie!`)}; 
 }
 
-//The Play button
-const play = document.querySelector('#play');
-//calls the game function when user presses play
-play.addEventListener('click', game);
+//buttons to provide player selection
+const rock = document.querySelector('#rock');
 
+//unfinished idea to use playedButton function to delete repetition in code
+//rock.addEventListener('click', playedButton(0))
 
+rock.addEventListener('click', () => {
+    let roundResults = (playRound("rock", computerPlay()));
+    logResult(roundResults);
+})
+    
+const paper = document.querySelector('#paper');
+paper.addEventListener('click', () => {
+    let roundResults = (playRound("paper", computerPlay()));
+    logResult(roundResults);
+})
+
+const scissors = document.querySelector('#scissors');
+scissors.addEventListener('click', () => {
+    let roundResults = (playRound("scissors", computerPlay()));
+    logResult(roundResults);
+})
+
+//Unfinished function to use for all three buttons, idea is to send a number with the function to represent the play
+function playedButton(arg){
+    let play = ['rock', 'paper', 'scissors'];
+    let roundResults = (playRound(play[arg], computerPlay()));
+    logResult(roundResults);
+}
+
+//Prints out round results after making a play
+function logResult(roundResults){
+    console.log(`You ${roundResults[2]}. You played ${roundResults[0]} and computer played ${roundResults[1]}`);
+    const result = document.querySelector('#results');
+    const p = document.createElement('p')
+    p.classList.add('results');
+    p.textContent = `You ${roundResults[2]}. You played ${roundResults[0]} and computer played ${roundResults[1]}`;
+    result.appendChild(p)
+}
