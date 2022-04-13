@@ -52,7 +52,7 @@ function game(){
     //Plays 5 rounds
     for (let i=0; i<5; i++){
         //prompts user for input
-        let playerSelection = selection();
+        let playerSelection = prompt();
         //puts result of the round into roundResults array
         let roundResults = (playRound(playerSelection, computerPlay()));
         //console.log(roundResults);
@@ -78,38 +78,85 @@ function game(){
 const rock = document.querySelector('#rock');
 
 //unfinished idea to use playedButton function to delete repetition in code
-//rock.addEventListener('click', playedButton(0))
+//rock.addEventListener('click', playedButton(play[0]))
+
+let play = ['rock', 'paper', 'scissors'];
+let playerPoints = 0;
+let computerPoints = 0;
 
 rock.addEventListener('click', () => {
-    let roundResults = (playRound("rock", computerPlay()));
+    let roundResults = (playRound(play[0], computerPlay()));
     logResult(roundResults);
+    console.log(roundResults);
+    if(roundResults[3] === 1){ playerPoints++}
+    console.log(playerPoints);
+    if(roundResults[4] === 1){ computerPoints++}
+    console.log(computerPoints);
+    checkWinner(playerPoints, computerPoints)
 })
     
 const paper = document.querySelector('#paper');
 paper.addEventListener('click', () => {
-    let roundResults = (playRound("paper", computerPlay()));
+    let roundResults = (playRound(play[1], computerPlay()));
     logResult(roundResults);
+    console.log(roundResults);
+    if(roundResults[3] === 1){ playerPoints++}
+    console.log(playerPoints);
+    if(roundResults[4] === 1){ computerPoints++}
+    console.log(computerPoints);
+    checkWinner(playerPoints, computerPoints)
 })
 
 const scissors = document.querySelector('#scissors');
 scissors.addEventListener('click', () => {
-    let roundResults = (playRound("scissors", computerPlay()));
+    let roundResults = (playRound(play[2], computerPlay()));
     logResult(roundResults);
+    console.log(roundResults);
+    if(roundResults[3] === 1){ playerPoints++}
+    console.log(playerPoints);
+    if(roundResults[4] === 1){ computerPoints++}
+    console.log(computerPoints);
+    checkWinner(playerPoints, computerPoints)
 })
 
 //Unfinished function to use for all three buttons, idea is to send a number with the function to represent the play
-function playedButton(arg){
-    let play = ['rock', 'paper', 'scissors'];
-    let roundResults = (playRound(play[arg], computerPlay()));
+//sends play array, representing one of the three plays as string.
+function playedButton(play){
+    let roundResults = (playRound(play, computerPlay()));
+    //console logs the result and pushes it to the page
     logResult(roundResults);
+    //updatePoints(roundResults);
+    return roundResults;
 }
 
 //Prints out round results after making a play
 function logResult(roundResults){
+    //logs the play to the console
     console.log(`You ${roundResults[2]}. You played ${roundResults[0]} and computer played ${roundResults[1]}`);
     const result = document.querySelector('#results');
     const p = document.createElement('p')
     p.classList.add('results');
+    //adds the round result to the page
     p.textContent = `You ${roundResults[2]}. You played ${roundResults[0]} and computer played ${roundResults[1]}`;
     result.appendChild(p)
 }
+//an idea for tracking points and announcing winner
+function checkWinner(playerPoints, computerPoints){    
+    if(playerPoints >= 3){
+        console.log("Player wins with 5 points");
+        const result = document.querySelector('#results');
+        const p = document.createElement('p')
+        p.textContent = 'Player wins with 3 Points'
+        result.appendChild(p);
+
+    } 
+    if(computerPoints >= 3){
+        console.log("Computer wins with 5 points");
+        const result = document.querySelector('#results');
+        const p = document.createElement('p')
+        p.textContent = 'Computer wins with 3 Points'
+        result.appendChild(p);
+
+    }
+}
+
