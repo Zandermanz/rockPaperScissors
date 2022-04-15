@@ -1,4 +1,4 @@
-//Create function for computer play that will randomly return one of three values
+//Function for computer play that will randomly return one of three values
 function computerPlay(){
     //Create array that will hold three strings
     const play = ['rock', 'paper', 'scissors'];
@@ -9,18 +9,8 @@ function computerPlay(){
     return play[randomNumber];
 }
 
-//takes two parameters to play a round
-function playRound(playerSelection, computerSelection){
-    //converts selection strings to lowercase to make code case in-sensitive
-    playerSelection = playerSelection.toLowerCase();
-    //error checker, only executes code if it fits into one of the three values
-    if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
-        //returns array, no points to either side
-        let roundResults = [playerSelection, computerSelection, `played an invalid entry`, 0, 0];
-        //console.log(roundResults);
-        return roundResults;
-        
-    }   
+//Takes two parameters and play a round
+function playRound(playerSelection, computerSelection){  
     //ends function returns tie
     if (playerSelection == computerSelection){
         // Array is [playerSelection, computerSelection, result, playerPoints, computerPoints]
@@ -44,7 +34,7 @@ function playRound(playerSelection, computerSelection){
     return roundResults;
 }
 
-let play = ['rock', 'paper', 'scissors'];
+//defines global variables for tracking score
 let playerPoints = 0;
 let computerPoints = 0;
 
@@ -65,24 +55,33 @@ scissors.addEventListener('click', () => {
 })
 
 const reset = document.querySelector('#reset');
-reset.addEventListener('click', ()=> {
-    //
-    playerPoints = 0; 
-    computerPoints = 0}
+reset.addEventListener('click', resetGame)
 
-)
-//Unfinished function to use for all three buttons, idea is to send a number with the function to represent the play
-//sends play array, representing one of the three plays as string.
+function resetGame(){
+    resetPoints;
+    const result = document.querySelector('#results'); 
+    //while loop to remove all children
+    while (result.firstChild){
+        result.removeChild(result.firstChild)
+    }  
+}
+
+function resetPoints(){
+    playerPoints = 0; 
+    computerPoints = 0;
+}
+
+//Function for three buttons, makes a play, calls announceResult function to put put result to page, awards points depending
+//on winner. Calls checkWinner function to see if there is a winner and resets the score 
 function playedButton(play){
     let roundResults = (playRound(play, computerPlay()));
-    //console logs the result and pushes it to the page
+    //Pushes winner to the page
     announceResult(roundResults);
-    console.log(roundResults);
+    //awards points based on winner
     if(roundResults[3] === 1){playerPoints++}
     if(roundResults[4] === 1){computerPoints++}
     //after each button is pressed, checkWinner looks to see if either has 3 points
     checkWinner(playerPoints, computerPoints)
-    return roundResults;
 }
 
 //Prints out round results after making a play
@@ -102,46 +101,14 @@ function checkWinner(playerPoints, computerPoints){
     const result = document.querySelector('#results');
     const p = document.createElement('p')
     if(playerPoints >= 3){
-        p.textContent = `Player wins with ${playerPoints} points to Computer's ${computerPoints} points. `
+        p.textContent = `Player wins with ${playerPoints} points to Computer's ${computerPoints} points.`
+        console.log(`Player wins with ${playerPoints} points to Computer's ${computerPoints} points.`);
+        resetPoints();
     } 
     if(computerPoints >= 3){
         p.textContent = `Computer wins with ${computerPoints} points to Player's ${playerPoints} points.`
+        console.log(`Computer wins with ${computerPoints} points to Player's ${playerPoints} points.`);
+        resetPoints();
     }
-    result.appendChild(p);
-}
-
-
-
-
-
-
- //old function that worked in the console, but not with the buttons
- function game(){
-    //sets initial score count before loop
-    let playerPoints = 0;
-    let computerPoints = 0;
-    console.log(`Here we go. Best of 5 Wins!`)
-    //Plays 5 rounds
-    for (let i=0; i<5; i++){
-        //prompts user for input
-        let playerSelection = prompt();
-        //puts result of the round into roundResults array
-        let roundResults = (playRound(playerSelection, computerPlay()));
-        //console.log(roundResults);
-        console.log(`You ${roundResults[2]}. You played ${roundResults[0]} and computer played ${roundResults[1]}`);
-        //receive each element of the playRound array into it's holder and store
-        playerPoints = playerPoints + roundResults [3];
-        computerPoints = computerPoints + roundResults [4];
-        //if the round result it a tie, subtracts an iterator so it doesn't count against the amount of rounds played
-        if(roundResults[2] == `Tied` || `played an invalid entry`) i--;
-        if(computerPoints === 3 || playerPoints === 3) {break}
-    }
-    // announce a winner
-    if (playerPoints > computerPoints){
-        console.log(`You Win this Round ${playerPoints} to ${computerPoints}`);
-    } else if(playerPoints < computerPoints)
-        {console.log(`Computer Wins this round ${computerPoints} to ${playerPoints}`);
-    //tie is not currently possible
-    } else if(playerPoints == computerPoints){
-        console.log(`This round's a tie!`)}; 
+    result.appendChild(p);   
 }
