@@ -100,6 +100,7 @@ function announceResult(roundResults){
 function checkWinner(playerPoints, computerPoints){    
     const result = document.querySelector('#results');
     const p = document.createElement('p')
+    p.classList.add('announceWin');
     if(playerPoints >= 3){
         p.textContent = `Player wins with ${playerPoints} points to Computer's ${computerPoints} points.`
         console.log(`Player wins with ${playerPoints} points to Computer's ${computerPoints} points.`);
