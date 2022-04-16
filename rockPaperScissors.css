@@ -1,8 +1,11 @@
 body{
-    background-color: black;
-    color: antiquewhite;
+    /* background-color: black;
+    color: antiquewhite; */
     font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
     font-size: 16px;
+    margin: auto;
+    width: 70%;
+    padding: 10px;
 }
 
 .buttons{
@@ -12,5 +15,18 @@ body{
 }
 
 .results{
-    color: green;
+  color: black;
+}
+
+.announceWin{
+    color: red;
+    font-size: 20px;
+}
+
+.icons{
+    height: 150px;
+    width: auto;
+    border: solid;
+    padding: 10px;
+    
 }
